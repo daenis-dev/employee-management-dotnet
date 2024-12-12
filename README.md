@@ -4,7 +4,7 @@
 
 - Configure TLS with a self-signed certificate
 
-  - After cloning the project, navigate to the *api/certs* directory and generate a self-signed certificate
+  - After cloning the project, navigate to the *api* directory, create the *certs* directory and change into the *certs* directory. Generate a self-signed certificate
 
     ```
     openssl req \
