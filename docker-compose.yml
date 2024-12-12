@@ -1,0 +1,42 @@
+version: '3.8'
+
+networks:
+  my-network:
+    driver: bridge
+
+services:
+  employee-db:
+    image: postgres:latest
+    container_name: employee-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changeitdb
+      POSTGRES_DB: employees
+    volumes:
+      - ./api/data/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - my-network
+
+  employee-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: employee-api
+    environment:
+      DATABASE_URL: "Host=employee-db;Port=5432;Database=employees;Username=postgres;Password=changeitdb"
+    depends_on:
+      - employee-db
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "employees", "-h", "employee-db", "-p", "5432"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    networks:
+      - my-network
+    volumes:
+    - ./api/certs:/app/certs

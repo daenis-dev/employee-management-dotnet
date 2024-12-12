@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="EmployeeUI.MainPage"
+             Title="Employee List">
+    <CollectionView x:Name="EmployeeCollectionView">
+        <CollectionView.ItemTemplate>
+            <DataTemplate>
+                <StackLayout Padding="10">
+                    <Label Text="{Binding FirstName}" FontSize="20" />
+                    <Label Text="{Binding LastName}" FontSize="16" />
+                    <Label Text="{Binding JobTitleName}" FontSize="14" />
+                    <Label Text="{Binding Salary, StringFormat='${0:N0}'}" FontSize="14" />
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>
