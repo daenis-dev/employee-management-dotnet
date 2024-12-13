@@ -8,7 +8,6 @@ namespace EmployeeApi.Entities
         public string EmailAddress { get; set; }
         public decimal Salary { get; set; }
 
-        // Foreign Key
         public int JobTitleId { get; set; }
         public JobTitle JobTitle { get; set; }
     }
