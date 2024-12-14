@@ -46,9 +46,9 @@
 
 ### Images of Application - Android Emulator
 
-![Default Screen](docs/mobile-app-1)
+![Default Screen](docs/mobile-app-1.png)
 
-![Details Expanded](docs/mobile-app-2)
+![Details Expanded](docs/mobile-app-2.png)
 
-![Details Edited](docs/mobile-app-3)
+![Details Edited](docs/mobile-app-3.png)
 
