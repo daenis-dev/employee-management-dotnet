@@ -39,4 +39,5 @@
 
 ### Notes
 
-- I'm having trouble registering the self-signed certificates with the MAUI application. Once this is done, the **Set Up** section will be updated with deployment instructions for the user interface. 
+- I'm having trouble registering the self-signed certificates with the MAUI application. Once this is done, the **Set Up** section will be updated with deployment instructions for the user interface.
+- There is an outstanding bug that occurs when the user attempts to update an Employee's salary; specifically, when the first character is deleted. 
