@@ -44,11 +44,19 @@
 
 
 
-### Images of Application - Android Emulator
+### Default Screen - Android Emulator
 
 ![Default Screen](docs/mobile-app-1.png)
 
+
+
+### Details Screen - Android Emulator
+
 ![Details Expanded](docs/mobile-app-2.png)
+
+
+
+### Edit Details Screen - Android Emulator
 
 ![Details Edited](docs/mobile-app-3.png)
 
