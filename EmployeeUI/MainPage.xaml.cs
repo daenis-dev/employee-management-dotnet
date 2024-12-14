@@ -1,25 +1,23 @@
-﻿namespace EmployeeUI
+﻿using EmployeeUI.ViewModels;
+
+namespace EmployeeUI
 {
     public partial class MainPage : ContentPage
     {
-        private readonly EmployeeService _employeeService;
+        private readonly MainPageViewModel _viewModel;
 
         public MainPage()
         {
             InitializeComponent();
-            _employeeService = new EmployeeService();
+            var employeeService = new EmployeeService();
+            _viewModel = new MainPageViewModel(employeeService);
+            BindingContext = _viewModel;
         }
 
         protected override async void OnAppearing()
         {
             base.OnAppearing();
-            await LoadEmployeesAsync();
-        }
-
-        private async Task LoadEmployeesAsync()
-        {
-            var employees = await _employeeService.GetEmployeesAsync();
-            EmployeeCollectionView.ItemsSource = employees;
+            await _viewModel.LoadEmployeesAsync();
         }
     }
 

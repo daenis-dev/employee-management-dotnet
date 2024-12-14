@@ -2,19 +2,125 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="EmployeeUI.MainPage"
-             Title="Employee List">
+             xmlns:local="clr-namespace:EmployeeUI.Converters">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanToRotationConverter x:Key="BooleanToRotationConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
-        <CollectionView x:Name="EmployeeCollectionView">
+        <CollectionView ItemsSource="{Binding Employees}" SelectedItem="{Binding SelectedEmployee}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10">
-                        <Label Text="{Binding FirstName}" FontSize="20" />
-                        <Label Text="{Binding LastName}" FontSize="16" />
-                        <Label Text="{Binding JobTitleName}" FontSize="14" />
-                        <Label Text="{Binding Salary, StringFormat='${0:N0}'}" FontSize="14" />
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                            <Label Text="{Binding FullName}" FontSize="20" VerticalOptions="Center" HorizontalOptions="StartAndExpand" />
+
+                            <Label Text="&#9660;" FontSize="20" VerticalOptions="Center" HorizontalOptions="End">
+                                <Label.Rotation>
+                                    <Binding Path="IsDetailsVisible" Converter="{StaticResource BooleanToRotationConverter}" />
+                                </Label.Rotation>
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer 
+                                        Command="{Binding BindingContext.ToggleDetailsCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}"
+                                        CommandParameter="{Binding}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding IsDetailsVisible}" Padding="10">
+                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                <Label Text="Job Title:" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
+
+                                <Label Text="{Binding JobTitleName}" 
+                                       FontSize="14" 
+                                       IsVisible="{Binding IsNotEditing}" 
+                                       VerticalOptions="Center" />
+
+                                <Entry Text="{Binding EditingJobTitleName}" 
+                                       FontSize="14" 
+                                       IsVisible="{Binding IsEditing}" 
+                                       VerticalOptions="Center" 
+                                       Keyboard="Default" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" Spacing="5">
+                                <Label Text="Salary:" FontAttributes="Bold" FontSize="14" VerticalOptions="Center" />
+
+                                <Label Text="{Binding Salary, StringFormat='${0:N0}'}" 
+                                       FontSize="14" 
+                                       IsVisible="{Binding IsNotEditing}" 
+                                       VerticalOptions="Center"/>
+
+                                <Entry Text="{Binding EditingSalary}" 
+                                       FontSize="14" 
+                                       IsVisible="{Binding IsEditing}" 
+                                       VerticalOptions="Center" 
+                                       Keyboard="Numeric" />
+                            </StackLayout>
+
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand" Spacing="10" Padding="10">
+                                <Button Text="Edit" 
+                                        IsVisible="{Binding IsNotEditing}"
+                                        Command="{Binding BindingContext.StartEditCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}" 
+                                        CommandParameter="{Binding}" 
+                                        Padding="10"
+                                        BackgroundColor="#0078D4"
+                                        TextColor="White"
+                                        CornerRadius="5"
+                                        HorizontalOptions="FillAndExpand" 
+                                        WidthRequest="120" />
+
+                                <Button Text="Save" 
+                                        IsVisible="{Binding IsEditing}"
+                                        Command="{Binding BindingContext.SaveEmployeeCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                        CommandParameter="{Binding}"
+                                        Padding="10"
+                                        BackgroundColor="#4CAF50"
+                                        TextColor="White"
+                                        CornerRadius="5"
+                                        HorizontalOptions="FillAndExpand" 
+                                        WidthRequest="120" />
+
+                                <Button Text="Cancel" 
+                                        IsVisible="{Binding IsEditing}"
+                                        Command="{Binding BindingContext.CancelEditCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}" 
+                                        CommandParameter="{Binding}"
+                                        Padding="10"
+                                        BackgroundColor="#0078D4"
+                                        TextColor="White"
+                                        CornerRadius="5"
+                                        HorizontalOptions="FillAndExpand" 
+                                        WidthRequest="120" />
+
+                                <Button Text="Delete" 
+                                        IsVisible="{Binding IsNotEditing}"
+                                        Command="{Binding BindingContext.DeleteEmployeeCommand, Source={RelativeSource AncestorType={x:Type CollectionView}}}" 
+                                        CommandParameter="{Binding}" 
+                                        Padding="10"
+                                        BackgroundColor="#FF5722"
+                                        TextColor="White"
+                                        CornerRadius="5"
+                                        HorizontalOptions="FillAndExpand" 
+                                        WidthRequest="120" />
+                            </StackLayout>
+                        </StackLayout>
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
     </ScrollView>
 </ContentPage>
+
+
+
+
+
+
+
+
+
+
+
